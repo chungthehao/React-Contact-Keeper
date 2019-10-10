@@ -13,6 +13,13 @@ export default (state, action) => {
                     action.payload // cái mới add
                 ]
             }
+        
+        case DELETE_CONTACT:
+            return { 
+                ...state, // Trạng thái state cũ
+                contacts: state.contacts.filter(c => c.id !== action.payload)
+            }
+        
         default:
             return state
     }
