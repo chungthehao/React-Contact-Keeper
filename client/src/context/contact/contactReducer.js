@@ -20,6 +20,18 @@ export default (state, action) => {
                 contacts: state.contacts.filter(c => c.id !== action.payload)
             }
         
+        case SET_CURRENT:
+            return { 
+                ...state, // Trạng thái state cũ
+                current: action.payload
+            }
+        
+        case CLEAR_CURRENT:
+            return { 
+                ...state, // Trạng thái state cũ
+                current: null
+            }
+        
         default:
             return state
     }

@@ -6,6 +6,8 @@ const ContactForm = () => {
     // Initialize context
     const contactContext = useContext(ContactContext) // Mang nó vô để add contact vô state
 
+    const { current } = contactContext
+
     // Component level state
     const [contact, setContact] = useState({
         name: '',
