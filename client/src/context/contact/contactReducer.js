@@ -19,6 +19,20 @@ export default (state, action) => {
                 ...state, // Trạng thái state cũ
                 contacts: state.contacts.filter(c => c.id !== action.payload)
             }
+
+        case UPDATE_CONTACT:
+            // Vấn đề performance: nếu mảng 1000 eles, chạy hết 1000 cái (dù cho đã đổi xong ở đâu đó r)
+            return {
+                ...state,
+                contacts: state.contacts.map(c => c.id === action.payload.id ? action.payload : c)
+            }
+
+            // * Cách mình:
+            // const idx = state.contacts.findIndex(c => c.id === action.payload.id)
+            // state.contacts.splice(idx, 1, action.payload)
+            // return { 
+            //     ...state, // Trạng thái state cũ
+            // }
         
         case SET_CURRENT:
             return { 
