@@ -46,6 +46,21 @@ export default (state, action) => {
                 current: null
             }
         
+        case FILTER_CONTACTS:
+            return { 
+                ...state, // Trạng thái state cũ
+                filtered: state.contacts.filter(c => {
+                    const regex = new RegExp(`${action.payload}`, 'gi')
+                    return c.name.match(regex) || c.email.match(regex) || c.phone.match(regex) || c.type.match(regex)
+                })
+            }
+        
+        case CLEAR_FILTER:
+            return { 
+                ...state, // Trạng thái state cũ
+                filtered: null
+            }
+        
         default:
             return state
     }

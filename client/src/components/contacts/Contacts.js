@@ -7,14 +7,21 @@ const Contacts = () => {
     // Initialize context
     const contactContext = useContext(ContactContext)
     // Pull state out with these destructuring
-    const { contacts } = contactContext
+    const { contacts, filtered } = contactContext
 
+    if (contacts.length === 0) return <h4>Please add your contacts.</h4>
 
     return (
         <Fragment>
-            {contacts.map(
-                contact => <ContactItem key={contact.id} contact={contact} />
-            )}
+            {
+                filtered !== null 
+                    ?   filtered.map(
+                            contact => <ContactItem key={contact.id} contact={contact} />
+                        )
+                    :   contacts.map(
+                            contact => <ContactItem key={contact.id} contact={contact} />
+                        )
+            }
         </Fragment>
     )
 }
