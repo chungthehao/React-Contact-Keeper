@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import AuthContext from '../../context/auth/authContext'
 import AlertContext from '../../context/alert/alertContext'
 
-const Register = () => {
+const Register = props => {
     // Component level state
     const [user, setUser] = useState({
         name: '',
@@ -22,14 +22,21 @@ const Register = () => {
     // Initialize
     const authContext = useContext(AuthContext)
     // Pull out
-    const { error, register, clearErrors } = authContext
+    const { error, register, clearErrors, isAuthenticated } = authContext
 
     useEffect(() => {
+        if (isAuthenticated) {
+            props.history.push('/') // redirect to home page after authenticated
+        }
+
         if (error === 'This email has been already registered.') {
             setAlert(error, 'danger')
             clearErrors()
         }
-    }, [error])
+
+        // React Hook useEffect has missing dependencies: 'clearErrors' and 'setAlert'.
+        // eslint-disable-next-line
+    }, [error, isAuthenticated, props.history])
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })
 

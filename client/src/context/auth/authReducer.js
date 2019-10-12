@@ -22,6 +22,7 @@ export default (state, { type, payload }) => {
             }
         
         case REGISTER_FAIL:
+        case AUTH_ERROR: // Có token mà ko get đc info của user --> hết hạn hay sao đó, xóa token đó
             localStorage.removeItem('token')
             return {
                 ...state,
@@ -30,6 +31,14 @@ export default (state, { type, payload }) => {
                 loading: false,
                 user: null,
                 error: payload // AuthState.js: err.response.data.msg
+            }
+        
+        case USER_LOADED:
+            return {
+                ...state,
+                user: payload,
+                isAuthenticated: true,
+                loading: false
             }
         
         case CLEAR_ERRORS:
