@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ContactContext from '../../context/contact/contactContext'
 
 const ContactItem = ({ contact }) => {
-    const { id, name, email, phone, type } = contact
+    const { _id, name, email, phone, type } = contact
 
     // Initialize
     const contactContext = useContext(ContactContext)
@@ -12,7 +12,7 @@ const ContactItem = ({ contact }) => {
     const { deleteContact, setCurrent, clearCurrent } = contactContext
 
     const onDelete = () => {
-        deleteContact(id)
+        deleteContact(_id)
         
         // Đang edit giữa chừng mà xóa (bất kỳ cái nào) thì dẹp việc edit đi
         clearCurrent()

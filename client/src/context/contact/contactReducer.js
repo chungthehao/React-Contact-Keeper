@@ -15,9 +15,9 @@ export default (state, action) => {
         case ADD_CONTACT:
             return { 
                 ...state, // Trạng thái state cũ
-                contacts: [ // Ghi đè lên 'contacts' của cái cũ
-                    ...state.contacts, // những contacts cũ
-                    action.payload // cái mới add
+                contacts: [ // Ghi đè lên 'contacts' của 'state' cũ (ở trên)
+                    action.payload, // cái mới add
+                    ...state.contacts // những contacts cũ
                 ],
                 loading: false
             }
@@ -25,7 +25,7 @@ export default (state, action) => {
         case DELETE_CONTACT:
             return { 
                 ...state, // Trạng thái state cũ
-                contacts: state.contacts.filter(c => c.id !== action.payload),
+                contacts: state.contacts.filter(c => c._id !== action.payload),
                 loading: false
             }
 
