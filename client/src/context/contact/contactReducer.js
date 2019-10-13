@@ -33,7 +33,7 @@ export default (state, action) => {
             // Vấn đề performance: nếu mảng 1000 eles, chạy hết 1000 cái (dù cho đã đổi xong ở đâu đó r)
             return {
                 ...state,
-                contacts: state.contacts.map(c => c.id === action.payload.id ? action.payload : c),
+                contacts: state.contacts.map(c => c._id === action.payload._id ? action.payload : c),
                 loading: false
             }
 
