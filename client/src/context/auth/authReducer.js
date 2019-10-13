@@ -12,6 +12,7 @@ import {
 export default (state, { type, payload }) => {
     switch (type) {
         case REGISTER_SUCCESS:
+        case LOGIN_SUCCESS:
             // Put the token inside of localStorage
             localStorage.setItem('token', payload)
             return {
@@ -23,6 +24,7 @@ export default (state, { type, payload }) => {
         
         case REGISTER_FAIL:
         case AUTH_ERROR: // Có token mà ko get đc info của user --> hết hạn hay sao đó, xóa token đó
+        case LOGIN_FAIL:
             localStorage.removeItem('token')
             return {
                 ...state,
