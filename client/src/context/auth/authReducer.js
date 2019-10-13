@@ -25,6 +25,7 @@ export default (state, { type, payload }) => {
         case REGISTER_FAIL:
         case AUTH_ERROR: // Có token mà ko get đc info của user --> hết hạn hay sao đó, xóa token đó
         case LOGIN_FAIL:
+        case LOGOUT:
             localStorage.removeItem('token')
             return {
                 ...state,

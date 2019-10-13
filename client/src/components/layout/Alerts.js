@@ -5,7 +5,7 @@ const Alerts = () => {
     // Initialize
     const alertContext = useContext(AlertContext)
     // Pull out
-    const { alerts, setAlert } = alertContext
+    const { alerts } = alertContext
 
     return (
         alerts.length > 0 &&
