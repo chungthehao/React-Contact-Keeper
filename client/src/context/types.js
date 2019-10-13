@@ -1,6 +1,7 @@
 // * Note: Phải làm sao thấy được mình cần action nào trong quá trình dev
 // Decide what we're gonna do within our reducer
 export const ADD_CONTACT = 'ADD_CONTACT'
+export const CONTACT_ERROR = 'CONTACT_ERROR'
 export const DELETE_CONTACT = 'DELETE_CONTACT'
 export const SET_CURRENT = 'SET_CURRENT'
 export const CLEAR_CURRENT = 'CLEAR_CURRENT'

@@ -1,6 +1,6 @@
 import {
     ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT,
-    UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER
+    UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER, CONTACT_ERROR
 } from '../types'
 
 export default (state, action) => {
@@ -59,6 +59,12 @@ export default (state, action) => {
             return { 
                 ...state, // Trạng thái state cũ
                 filtered: null
+            }
+        
+        case CONTACT_ERROR:
+            return { 
+                ...state, // Trạng thái state cũ
+                error: action.payload
             }
         
         default:

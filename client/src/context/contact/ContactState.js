@@ -1,17 +1,17 @@
 import React, { useReducer } from 'react'
-import uuid from 'uuid'
+import axios from 'axios'
 
 import ContactContext from './contactContext'
 import contactReducer from './contactReducer'
 import {
     ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT,
-    UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER
+    UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER, CONTACT_ERROR
 } from '../types'
 
 const ContactState = props => {
-
     const initialState = {
         contacts: [
+            /*
             {
                 "id": 1,
                 "name": "John Doe",
@@ -33,9 +33,11 @@ const ContactState = props => {
                 "phone": "333-333-3333",
                 "type": "professional",
             },
+            */
         ],
         current: null,
-        filtered: null
+        filtered: null,
+        error: null
     }
 
     // * Pull out the state and dispatch from our reducer by using the use reducer hook
@@ -43,9 +45,22 @@ const ContactState = props => {
 
     /* --- Actions --- */
     // Add contact
-    const addContact = contact => {
-        contact.id = uuid.v4()
-        dispatch({ type: ADD_CONTACT, payload: contact })
+    const addContact = async contact => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+            // jwt đã được set global ở App.js rồi
+            const res = await axios.post('/api/contacts', contact, config)
+
+            dispatch({ type: ADD_CONTACT, payload: res.data })
+        } catch (err) {
+            console.error(err.response.data)
+            dispatch({ type: CONTACT_ERROR, payload: err.response.data.msg })
+        }
     }
 
     // Delete contact
@@ -85,6 +100,7 @@ const ContactState = props => {
                 contacts: state.contacts,
                 current: state.current,
                 filtered: state.filtered,
+                error: state.error,
                 addContact,
                 updateContact,
                 deleteContact,
