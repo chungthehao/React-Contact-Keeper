@@ -1,30 +1,40 @@
 import {
-    ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT,
-    UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER, CONTACT_ERROR
+    GET_CONTACTS, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT,
+    UPDATE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER, CONTACT_ERROR, CLEAR_CONTACTS
 } from '../types'
 
 export default (state, action) => {
     switch (action.type) {
+        case GET_CONTACTS:
+            return { 
+                ...state, // Trạng thái state cũ
+                contacts: action.payload,
+                loading: false
+            }
+        
         case ADD_CONTACT:
             return { 
                 ...state, // Trạng thái state cũ
                 contacts: [ // Ghi đè lên 'contacts' của cái cũ
                     ...state.contacts, // những contacts cũ
                     action.payload // cái mới add
-                ]
+                ],
+                loading: false
             }
         
         case DELETE_CONTACT:
             return { 
                 ...state, // Trạng thái state cũ
-                contacts: state.contacts.filter(c => c.id !== action.payload)
+                contacts: state.contacts.filter(c => c.id !== action.payload),
+                loading: false
             }
 
         case UPDATE_CONTACT:
             // Vấn đề performance: nếu mảng 1000 eles, chạy hết 1000 cái (dù cho đã đổi xong ở đâu đó r)
             return {
                 ...state,
-                contacts: state.contacts.map(c => c.id === action.payload.id ? action.payload : c)
+                contacts: state.contacts.map(c => c.id === action.payload.id ? action.payload : c),
+                loading: false
             }
 
             // * Cách mình:
@@ -53,6 +63,16 @@ export default (state, action) => {
                     const regex = new RegExp(`${action.payload}`, 'gi')
                     return c.name.match(regex) || c.email.match(regex) || c.phone.match(regex) || c.type.match(regex)
                 })
+            }
+        
+        case CLEAR_CONTACTS:
+            return { 
+                ...state, // Trạng thái state cũ
+                contacts: null,
+                filtered: null,
+                loading: true,
+                error: null,
+                current: null
             }
         
         case CLEAR_FILTER:
